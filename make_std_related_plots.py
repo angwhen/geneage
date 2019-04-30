@@ -5,7 +5,7 @@ import random
 import seaborn as sns
 import pandas as pd
 
-# THIS IS VERY MESSY, WILL PUT IN JUPYTER AND MAKE NICER LATER ...
+# THIS IS VERY MESSY, SEE THE JUPYTER NOTEBOOK WITH SAME NAME instead
 
 function_to_ages = pickle.load(open("data/function_to_age_simplified_dict.p","rb"))
 function_list= []
