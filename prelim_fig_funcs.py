@@ -5,7 +5,7 @@ import random
 import sys
 import seaborn as sns
 import pandas as pd
-
+from scipy import stats
 
 def get_function_grouped_age_data(function_to_ages):
     function_list = []
@@ -57,15 +57,18 @@ def figure1(ax,len_list,std_list,rand_std_list):
         len_func_stds.append(np.mean(len_dict_func_std_list[l]))
         len_rand_stds.append(np.mean(len_dict_rand_std_list[l]))
         len_order_list.append(l)
-    ax.set_ylim(ymin=0, ymax=0.5)
-    ax.set_xlim(xmin=0,xmax=0.5)
+    ax.set_ylim(0,0.5)
+    ax.set_xlim(0,0.5)
     ax.scatter(len_func_stds, len_rand_stds,  s=2, c="blue", alpha=0.5)
-   
+    ax.set_ylabel("Random Grouped Stds")
+    ax.set_xlabel("Function Grouped Stds")
+
 
 def figure2(ax,std_list, rand_std_list):
 
     ax.hist(std_list,bins=50,alpha=0.5,color="blue",label="by function")
     ax.hist(rand_std_list,bins=50,alpha=0.5,color="orange",label="random")
+    ax.set_xlabel("Stds")
 
 def figure4(ax,len_list,std_list,rand_std_list):
     #PLOT VIOLIN OF STDS GROUPED BY SET SIZE
@@ -118,8 +121,14 @@ def figure4(ax,len_list,std_list,rand_std_list):
             for s in len_dict_rand_std_list[l]:
                 v_data.append(["Largest",s,"Rand"])
 
+    
     v_df = pd.DataFrame(v_data,columns = ["GeneSet","Std","Type"])
     sns.violinplot(x="GeneSet",y="Std",data=v_df,ax=ax, order = ["<%d"%lq,"<%d"%mq ,"<%d"%uq,"Largest"],hue="Type",palette="muted",split=True,legend=False)
     ax.set_xticklabels(ax.get_xticklabels(), rotation=90, rotation_mode="anchor")
-    ax.set_ylim(0,0.5)
-    ax.set_xlim(0,0.5)
+    
+
+    print "<%d"%lq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%lq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%lq]["Std"])
+    print "<%d"%mq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%mq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%mq]["Std"])    
+    print "<%d"%uq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%uq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%uq]["Std"])
+    print "Largest", stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "Largest"]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "Largest"]["Std"])
+    
