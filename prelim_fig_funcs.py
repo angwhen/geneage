@@ -121,3 +121,5 @@ def figure4(ax,len_list,std_list,rand_std_list):
     v_df = pd.DataFrame(v_data,columns = ["GeneSet","Std","Type"])
     sns.violinplot(x="GeneSet",y="Std",data=v_df,ax=ax, order = ["<%d"%lq,"<%d"%mq ,"<%d"%uq,"Largest"],hue="Type",palette="muted",split=True,legend=False)
     ax.set_xticklabels(ax.get_xticklabels(), rotation=90, rotation_mode="anchor")
+    ax.set_ylim(0,0.5)
+    ax.set_xlim(0,0.5)
