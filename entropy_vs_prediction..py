@@ -10,6 +10,8 @@ import os
 import prelim_fig_funcs
 import csv
 
+#this file does not do anything so far
+
 # import the main_HUMAN_csv
 # for all the genes in HUMAN_LDO_summary.csv 
 # match them to their entropy value
