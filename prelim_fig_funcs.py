@@ -6,6 +6,8 @@ import sys
 import seaborn as sns
 import pandas as pd
 from scipy import stats
+from sklearn.mixture import GaussianMixture
+import math
 
 def get_function_grouped_age_data(function_to_ages):
     function_list = []
@@ -36,7 +38,6 @@ def get_random_grouped_age_data(len_list,ages_list):
         rand_mean_list.append(m)
         rand_std_list.append(s)
     return rand_mean_list, rand_std_list
-        
 
 def figure1(ax,len_list,std_list,rand_std_list):
     len_dict_func_std_list = {}
@@ -127,8 +128,8 @@ def figure4(ax,len_list,std_list,rand_std_list):
     ax.set_xticklabels(ax.get_xticklabels(), rotation=90, rotation_mode="anchor")
     
 
-    print "<%d"%lq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%lq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%lq]["Std"])
-    print "<%d"%mq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%mq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%mq]["Std"])    
-    print "<%d"%uq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%uq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%uq]["Std"])
-    print "Largest", stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "Largest"]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "Largest"]["Std"])
+    print ("<%d"%lq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%lq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%lq]["Std"]))
+    print ("<%d"%mq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%mq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%mq]["Std"]))
+    print ("<%d"%uq, stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "<%d"%uq]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "<%d"%uq]["Std"]))
+    print ("Largest", stats.wilcoxon(v_df[v_df['Type']=="Func"][v_df["GeneSet"] == "Largest"]["Std"], v_df[v_df['Type']=="Rand"][v_df["GeneSet"] == "Largest"]["Std"]))
     
